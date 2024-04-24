@@ -27,9 +27,7 @@ class BooksSpider(scrapy.Spider):
 
     @staticmethod
     def get_stock_amount(response: Response) -> int:
-        availability = response.xpath(
-            "//p[@class='instock availability']/i/following-sibling::text()"
-        ).get().strip()
+        availability = response.css("p.instock.availability").get()
         amount_str = re.search(r"\d+", availability).group()
         return int(amount_str) if amount_str else 0
 
